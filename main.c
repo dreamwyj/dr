@@ -3,11 +3,12 @@
 #include "itmojun.h"
 
 #pragma comment(lib,"itmojun.lib")
-
+#pragma comment(lib,"winmm.lib")
 int main()
 {
 	char cmd[301];//(从微信端接收消息)
 	AutoRun();//将当前程序设置为开机自动运行
+	mciSendString("open bg.mp3 alias s",NULL,0,NULL);//打开指定音乐文件并指定其别名为s 
 	while(1)
 	{
 		//GetPCCmd函数的功能：从微信端接收一条消息，如果没有任何消息它会一直等待
@@ -50,6 +51,28 @@ int main()
 	{//强制打开广告页面
 		WinExec("explorer https://itmojun.com",1);
 	}
+	else if(strstr(cmd,"记事本"))
+	{//打开记事本
+	WinExec("notepad",1); 
+	} 
+	else if(strstr(cmd,"播放"))
+	{//播放背景音乐 
+
+	mciSendString("play s repeat",NULL,0,NULL);//重复播放s 
+	 
+	} 
+	else if(strstr(cmd,"暂停"))
+	{//暂停背景音乐 
+
+	mciSendString("pause s",NULL,0,NULL);
+	 
+	} 
+		else if(strstr(cmd,"停止"))
+	{//暂停背景音乐 
+
+	mciSendString("stop s",NULL,0,NULL);
+	 
+	} 
 	Sleep(3000);//延时3秒
 	}
 	return 0;
